@@ -14,3 +14,10 @@ post '/raw-cypher' do
     rest["/db/data/ext/CypherPlugin/graphdb/execute_query"].post data.to_json, 
                  {:accept=>"application/json",:content_type=>"application/json"}
 end
+
+# support some minimalistic exploration for the neo4j-jdbc driver
+get '/' do
+   { :data => request.url ,
+     :extensions => { :CypherPlugin => { :execute_query => request.url + "raw-cypher" }}
+   }.to_json
+end
